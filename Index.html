@@ -1,14 +1,426 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contoh CSS Eksternal dengan Efek</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Replika Marketplace Game - Demo</title>
+  <style>
+    /* Reset */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html,body{height:100%}
+    body{
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: #0f0f10;
+      color: #eee;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding: 24px;
+    }
+
+    /* Container */
+    .wrap{
+      max-width: 940px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:20px;
+    }
+    .logo {
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .logo .mark{
+      width:42px;height:42px;border-radius:8px;
+      background: linear-gradient(135deg,#ff4d6d,#ff8a00);
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;
+      box-shadow:0 4px 14px rgba(255,74,95,0.12);
+    }
+    .search {
+      flex:1;
+      margin: 0 12px;
+      position:relative;
+    }
+    .search input{
+      width:100%;
+      background:#141416;
+      border:1px solid #232326;
+      padding:12px 44px 12px 14px;
+      border-radius:10px;color:#ddd;
+      outline:none;
+    }
+    .search .icon{
+      position:absolute;right:12px;top:50%;transform:translateY(-50%);opacity:0.6;font-size:14px;
+    }
+    .header-actions{display:flex;gap:10px;align-items:center}
+    .btn-ghost{background:transparent;border:1px solid #2a2a2a;padding:8px 12px;border-radius:8px;color:#ddd}
+    .btn-primary{background:#ff4666;color:#fff;padding:8px 12px;border-radius:8px;border:none}
+
+    /* Hero banner */
+    .hero{
+      margin-bottom:22px;
+      background: linear-gradient(90deg,#1b1b1e 0%, #151517 40% );
+      border-radius:14px;
+      padding:18px;
+      position:relative;
+      overflow:hidden;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+    }
+    .hero .left{
+      max-width:68%;
+    }
+    .hero h1{
+      font-size:22px;
+      letter-spacing:0.6px;
+      color: #ffd34d;
+      margin-bottom:8px;
+    }
+    .hero p{color:#f3f3f3;opacity:0.9}
+    .hero .badge{
+      display:inline-block;padding:6px 10px;border-radius:999px;background:#2b2b2b;color:#ffd34d;margin-top:10px;font-weight:600;
+    }
+    .hero .art{
+      position:absolute;right:12px;top:0;bottom:0;width:36%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border-left:1px solid rgba(255,255,255,0.02);
+      display:flex;align-items:center;justify-content:center;
+    }
+    .hero .art .face{
+      width:86%;height:86%;border-radius:8px;background:
+      radial-gradient(circle at 30% 20%, rgba(255,160,90,0.12), transparent 10%),
+      linear-gradient(135deg,#ffd9c7,#ffe8f0);
+      display:flex;align-items:center;justify-content:center;color:#2b2b2b;font-weight:700;
+      transform:rotate(-6deg);
+    }
+
+    /* Flash sale */
+    .section{margin-bottom:22px}
+    .section .title{
+      display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;
+    }
+    .title h3{font-size:16px}
+    .flash {
+      display:flex;gap:12px;
+      background:#151517;padding:14px;border-radius:12px;border:1px solid #232326;
+    }
+    .flash .item{
+      background: linear-gradient(180deg, #171718, #121213);
+      padding:14px;border-radius:10px;flex:1;position:relative;overflow:hidden;
+      min-width:140px;
+    }
+    .flash .ribbon{
+      position:absolute;right:-32px;top:10px;transform:rotate(30deg);
+      background:#ff3b6b;color:white;padding:6px 62px;font-weight:700;font-size:12px;
+      box-shadow:0 4px 8px rgba(0,0,0,0.4);
+    }
+    .price{font-weight:800;color:#fff;margin-top:8px}
+    .muted{color:#bdbdbd;font-size:13px;margin-top:6px}
+
+    /* Cards row small */
+    .cards-row{
+      display:flex;flex-wrap:wrap;gap:12px;
+    }
+    .small-card{
+      background:#141416;padding:12px;border-radius:10px;border:1px solid #222;
+      min-width:180px;flex:1;display:flex;gap:10px;align-items:center;
+    }
+    .small-card .thumb{
+      width:56px;height:56px;border-radius:8px;background:
+      linear-gradient(135deg,#8e2de2,#4a00e0);
+      display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;
+    }
+
+    /* Popular grid */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(3, 1fr);
+      gap:12px;
+      margin-top:12px;
+    }
+    .product{
+      background:linear-gradient(180deg,#18181a,#111112);border:1px solid #222;padding:10px;border-radius:10px;
+      display:flex;gap:12px;align-items:center;
+    }
+    .product .thumb{width:72px;height:72px;border-radius:8px;background:linear-gradient(135deg,#ff7a7a,#9b3cff);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff}
+    .product .meta h4{font-size:14px;margin-bottom:4px}
+    .product .meta p{font-size:12px;color:#bfbfbf}
+
+    /* Tabs/Category */
+    .cats{display:flex;gap:8px;margin:18px 0 12px}
+    .chip{padding:8px 12px;border-radius:999px;background:#1b1b1d;border:1px solid #2a2a2a;color:#fff;font-weight:600}
+
+    /* Large product cards */
+    .big-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+      margin-top:10px;
+    }
+    .big-card{
+      background: linear-gradient(180deg,#1a0f12,#120f12);
+      border-radius:14px;border:1px solid #221216;padding:0;overflow:hidden;
+      height:220px;display:flex;flex-direction:column;
+    }
+    .big-card .image{
+      flex:1;background-size:cover;background-position:center;
+      display:flex;align-items:flex-end;padding:12px;
+      color:#fff;font-weight:800;font-size:16px;
+      background-color:#2a2730;
+    }
+    .big-card .info{padding:12px;background:linear-gradient(0deg, rgba(0,0,0,0.25), transparent);}
+
+    /* footer / spacing */
+    footer{margin-top:30px;color:#999;font-size:13px;text-align:center;padding-bottom:60px}
+
+    /* Responsive */
+    @media (max-width:880px){
+      .wrap{padding:0 12px}
+      .hero .art{display:none}
+      .grid{grid-template-columns:repeat(2,1fr)}
+      .big-grid{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:520px){
+      header{flex-direction:column;align-items:stretch;gap:10px}
+      .grid{grid-template-columns:1fr}
+      .big-grid{grid-template-columns:1fr}
+      .hero h1{font-size:18px}
+    }
+  </style>
 </head>
 <body>
-    <h1>Contoh Menggunakan CSS Eksternal</h1>
-    <p>Ini adalah paragraf yang teksnya rata tengah dan berwarna merah.</p>
-    <p>CSS diterapkan menggunakan file eksternal bernama <b>style.css</b>.</p>
+  <div class="wrap">
+    <header>
+      <div class="logo">
+        <div class="mark">VG</div>
+        <div>
+          <div style="font-weight:700">VG-Store</div>
+          <div style="font-size:12px;color:#bbb">Game item marketplace</div>
+        </div>
+      </div>
+
+      <div class="search">
+        <input type="text" placeholder="Cari Game atau Voucher..." />
+        <div class="icon">🔍</div>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn-ghost">Cek Transaksi</button>
+        <button class="btn-ghost">Leaderboard</button>
+        <button class="btn-ghost">Masuk</button>
+        <button class="btn-primary">Daftar</button>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="left">
+        <h1>Cari akun FF, ML, dan game lainnya yang GG?</h1>
+        <p>Pastinya aman & bergaransi! Pilih produk, selesaikan pembayaran, dan nikmati game-mu.</p>
+        <div class="badge">PROMO FLASH - Terbatas</div>
+      </div>
+
+      <div class="art">
+        <div class="face">Artwork</div>
+      </div>
+    </section>
+
+    <!-- Flash sale -->
+    <section class="section">
+      <div class="title">
+        <h3>⚡ FLASH SALE</h3>
+        <div style="color:#bbb;font-size:13px">Pesan sekarang! Persediaan terbatas.</div>
+      </div>
+
+      <div class="flash">
+        <div class="item">
+          <div class="ribbon">Hemat 50%</div>
+          <div style="font-weight:700">Emote Special</div>
+          <div class="price">Rp 25.000 <span style="font-weight:500;color:#bdbdbd;font-size:12px;text-decoration:line-through;margin-left:8px">Rp 50.000</span></div>
+          <div class="muted">Yun Na' Yon? Emote</div>
+        </div>
+
+        <div class="item">
+          <div class="ribbon" style="background:#0056ff">SUPER SALE</div>
+          <div style="font-weight:700">MLBB VILOG - 6000 Diamonds</div>
+          <div class="price">Rp 1.299.000</div>
+          <div class="muted">Legal 100% - Invoice Resmi</div>
+        </div>
+
+        <div class="item">
+          <div class="ribbon">Hemat 30%</div>
+          <div style="font-weight:700">Emote Special</div>
+          <div class="price">Rp 35.000 <span style="font-weight:500;color:#bdbdbd;font-size:12px;text-decoration:line-through;margin-left:8px">Rp 50.000</span></div>
+          <div class="muted">Yun Na' Yon? Emote</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rekomendasi -->
+    <section class="section">
+      <div class="title">
+        <h3>✨ REKOMENDASI</h3>
+        <div style="color:#bbb;font-size:13px">Berikut adalah beberapa produk yang kami rekomendasikan untuk kamu.</div>
+      </div>
+
+      <div class="cards-row" style="margin-top:8px">
+        <div class="small-card">
+          <div class="thumb">FF</div>
+          <div>
+            <div style="font-weight:800">FREE FIRE</div>
+            <div class="muted">Garena</div>
+          </div>
+        </div>
+
+        <div class="small-card">
+          <div class="thumb">RBX</div>
+          <div>
+            <div style="font-weight:800">Topup Roblox</div>
+            <div class="muted">Roblox</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Populer -->
+    <section class="section">
+      <div class="title">
+        <h3>🔥 POPULER SEKARANG!</h3>
+        <div style="color:#bbb;font-size:13px">Berikut adalah beberapa produk yang paling populer saat ini.</div>
+      </div>
+
+      <div class="grid">
+        <div class="product">
+          <div class="thumb">RBX</div>
+          <div class="meta">
+            <h4>Topup Roblox Via Login</h4>
+            <p>Roblox</p>
+          </div>
+        </div>
+
+        <div class="product">
+          <div class="thumb">ML</div>
+          <div class="meta">
+            <h4>Honor Of Kings</h4>
+            <p>Moonton</p>
+          </div>
+        </div>
+
+        <div class="product">
+          <div class="thumb">MLB</div>
+          <div class="meta">
+            <h4>MOBILE LEGENDS</h4>
+            <p>Moonton</p>
+          </div>
+        </div>
+
+        <div class="product">
+          <div class="thumb">FF</div>
+          <div class="meta">
+            <h4>FREE FIRE</h4>
+            <p>Garena</p>
+          </div>
+        </div>
+
+        <div class="product">
+          <div class="thumb">PUBG</div>
+          <div class="meta">
+            <h4>PUBG Mobile</h4>
+            <p>Tencent Games</p>
+          </div>
+        </div>
+
+        <div class="product">
+          <div class="thumb">JRK</div>
+          <div class="meta">
+            <h4>Joki Rank MLBB</h4>
+            <p>Service</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- categories -->
+    <div class="cats">
+      <div class="chip">Top Up</div>
+      <div class="chip">Via Login</div>
+      <div class="chip">Voucher</div>
+      <div class="chip">Pulsa & Data</div>
+      <div class="chip">Live App</div>
+      <div class="chip">Tagihan</div>
+    </div>
+
+    <!-- Big product cards -->
+    <section class="section">
+      <div class="big-grid">
+        <div class="big-card">
+          <div class="image" style="background-image:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.35)), url('');">
+            <div>ROBLOX</div>
+          </div>
+          <div class="info">
+            <div style="font-weight:800">Top Up Roblox</div>
+            <div class="muted" style="margin-top:6px">Cepat & aman</div>
+          </div>
+        </div>
+
+        <div class="big-card">
+          <div class="image" style="background-image:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.35)), url('');">
+            <div>HONOR OF KINGS</div>
+          </div>
+          <div class="info">
+            <div style="font-weight:800">Top Up Diamond</div>
+            <div class="muted" style="margin-top:6px">Proses instan</div>
+          </div>
+        </div>
+
+        <div class="big-card">
+          <div class="image" style="background-image:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.35)), url('');">
+            <div>BLACK CLOVER</div>
+          </div>
+          <div class="info">
+            <div style="font-weight:800">Top Up Diamond</div>
+            <div class="muted" style="margin-top:6px">Promo spesial</div>
+          </div>
+        </div>
+
+        <div class="big-card">
+          <div class="image" style="background-image:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.35)), url('');">
+            <div>BLOOD STRIKE</div>
+          </div>
+          <div class="info">
+            <div style="font-weight:800">Top Up Diamond</div>
+            <div class="muted" style="margin-top:6px">Termurah</div>
+          </div>
+        </div>
+
+        <div class="big-card">
+          <div class="image" style="background-image:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.35)), url('');">
+            <div>FREE FIRE</div>
+          </div>
+          <div class="info">
+            <div style="font-weight:800">Bundle & Emote</div>
+            <div class="muted" style="margin-top:6px">Aman & cepat</div>
+          </div>
+        </div>
+
+        <div class="big-card">
+          <div class="image" style="background-image:linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.35)), url('');">
+            <div>ASSORTED</div>
+          </div>
+          <div class="info">
+            <div style="font-weight:800">Joki & Service</div>
+            <div class="muted" style="margin-top:6px">Terpercaya</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>Demo replika tampilan marketplace game — ganti gambar & teks sesuai kebutuhan.</footer>
+  </div>
 </body>
 </html>
